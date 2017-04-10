@@ -20,11 +20,14 @@ import org.slf4j.LoggerFactory;
  * isn't possible to use the ContainerResponseFilter to do what we want because that filter is called
  * <b>before</b> the response is actually written.  That's great for things like additional headers, but
  * it won't do us any good for logging.
+ *
+ * This class is marked with @Logged so that it pays attention to the annotation.
+ * 
  */
-@Logged
 @Provider
+@Logged
 public class ResponseInterceptor implements WriterInterceptor {
-    private static Logger LOG = LoggerFactory.getLogger(ResponseInterceptor.class);
+    private static Logger logger = LoggerFactory.getLogger(ResponseInterceptor.class);
     private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     @Override
@@ -36,19 +39,21 @@ public class ResponseInterceptor implements WriterInterceptor {
             context.proceed();
         }
         finally {
-            MediaType mediaType;
+            MediaType mediaType = MediaType.WILDCARD_TYPE;
 
             List<Object> contentTypes = context.getHeaders().get("Content-Type");
-            if( contentTypes != null )
-                mediaType = (MediaType)contentTypes.get(0);
-            else
-                mediaType = MediaType.WILDCARD_TYPE;
+            if( contentTypes != null ) {
+                if( contentTypes.get(0) instanceof MediaType)
+                    mediaType = (MediaType) contentTypes.get(0);
+                else if( contentTypes.get(0) instanceof String )
+                    mediaType = MediaType.valueOf((String)(contentTypes.get(0)));
+            }
 
             if( mediaType.getType().startsWith("text") || mediaType.equals(MediaType.APPLICATION_JSON_TYPE)) {
-                LOG.info("response body: " + baos.toString("UTF-8"));
+                logger.info("response body: " + baos.toString("UTF-8"));
             }
             else {
-                LOG.info("response body is of type " + mediaType.toString() + " and it starts with these hex chars: " + bytesToHex(baos.toByteArray(), 25));
+                logger.info("response body is of type " + mediaType.toString() + " and it starts with these hex chars: " + bytesToHex(baos.toByteArray(), 25));
             }
             baos.writeTo(originalStream);
             baos.close();

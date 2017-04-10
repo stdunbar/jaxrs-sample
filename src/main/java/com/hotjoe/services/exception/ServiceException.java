@@ -17,7 +17,7 @@ public abstract class ServiceException extends WebApplicationException {
         // defaults to a 500 error.  if we don't set this then getMessage()
         // will always be "Internal Error" so null out the getMessage() result.
         //
-        //this((String)null);
+        this((String)null);
     }
 
     /* package */ ServiceException(String message) {
@@ -34,9 +34,4 @@ public abstract class ServiceException extends WebApplicationException {
 
 
     public abstract Response.Status getStatus();
-
-    @Override
-    public String getMessage() {
-        return getStatus().getStatusCode() + " " + getStatus().getReasonPhrase();
-    }
 }

@@ -11,8 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.hotjoe.services.exception.ServiceException;
+
+// import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Produces( MediaType.APPLICATION_JSON )
 public class ServiceMessageBodyWriter implements MessageBodyWriter<ServiceException> {
@@ -40,9 +42,7 @@ public class ServiceMessageBodyWriter implements MessageBodyWriter<ServiceExcept
                         OutputStream entityStream)
                         throws IOException, WebApplicationException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        
-        String jsonString = mapper.writeValueAsString(exception);
+        String jsonString = new Gson().toJson(exception);
         
         entityStream.write( jsonString.getBytes( "UTF-8" ) );
     }

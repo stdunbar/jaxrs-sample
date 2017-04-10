@@ -3,7 +3,7 @@ package com.hotjoe.services.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +24,11 @@ import com.hotjoe.services.logging.Logged;
 
 
 /**
- * A sample service to demonstrate some simple JAX-RS calls.
+ * A sample service to demonstrate some simple JAX-RS calls.  This service is
+ * meant to simulate a simple catalog - you can add items to the catalog and
+ * you can query and get items from the catalog.  For this demo it just keeps
+ * a simple Map of product id to Product.
+ *
  */
 
 @Path("/v1/product")
@@ -34,32 +38,31 @@ public class SampleService {
     //
     // a demo backing store - it could be a db or whatever
     //
-    private static final Map<String, Product> products = new HashMap<>();
+    private static final Map<Integer, Product> products = new HashMap<>();
 
     @Logged  // this request is logged
     @GET
-    @Path("/{identifier}")
+    @Path("/{productId}")
     @Produces("application/json")
-    public Response getSomething(@PathParam("identifier") String identifier) throws WebApplicationException {
+    public Response getProduct(@PathParam("productId") Integer productId) throws WebApplicationException {
 
-        if( products.containsKey(identifier))
-            return Response.ok(products.get(identifier)).build();
+        if( products.containsKey(productId))
+            return Response.ok(products.get(productId)).build();
 
         //
         // A full exception - includes a messages and a full stack trace
         //
-        // throw new NotFoundServiceException("identifier '" + identifier + "' not found", new Throwable());
+        // throw new NotFoundServiceException("productId not found - " + productId, new Throwable());
 
         //
         // A message only exception
         //
-        // throw new NotFoundServiceException("identifier '" + identifier + "' not found");
+        throw new NotFoundServiceException("productId not found - " + productId);
 
         //
+        // Just a HTTP return code (404 in this case)
         //
-        NotFoundServiceException notFoundServiceException = new NotFoundServiceException();
-
-        throw new NotFoundServiceException();
+        // throw new NotFoundServiceException();
     }
 
     @Logged  // this request is logged
@@ -67,32 +70,28 @@ public class SampleService {
     @Path("/")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response createSomething(Product product) throws WebApplicationException {
+    public Response createProduct(Product product) throws WebApplicationException {
 
         logger.log(Level.FINE, "got a create product request");
 
         if(product == null)
             throw new BadRequestServiceException("record body is missing");
 
-        if( products.containsKey(product.getIdentifier()))
-            throw new ConflictServiceException("identifier " + product.getIdentifier() + " already exists");
+        if( product.getProductId() == null )
+            product.setProductId( ThreadLocalRandom.current().nextInt(10000, 1000000 + 1));
+        else if( products.containsKey(product.getProductId()))
+            throw new ConflictServiceException("product id " + product.getProductId() + " already exists");
 
-        if( (product.getIdentifier() != null) && product.getIdentifier().contains("-"))
-            throw new BadRequestServiceException("record identifier " + product.getIdentifier() +
+        //
+        // arbitrary business rule to show other exceptions - record description can't have dashes.
+        //
+        if( (product.getDescription() != null) && product.getDescription().contains("-"))
+            throw new BadRequestServiceException("record description " + product.getDescription() +
                     " is invalid. it cannot contain the minus sign (dash) character");
 
-        Random random = new Random();
+        logger.log(Level.INFO, "Created product record with description \"" + product.getDescription() + "\"");
 
-        product.setProductId( Math.abs(random.nextInt()) );
-
-        logger.log(Level.INFO, "Created record: " + product.getIdentifier());
-
-        products.put(product.getIdentifier(), product);
-
-        //
-        // return what makes sense - just 200 or more?
-        //
-        // return Response.ok(product).build();
+        products.put(product.getProductId(), product);
 
         return Response.status(Response.Status.CREATED).entity(product).build();
     }

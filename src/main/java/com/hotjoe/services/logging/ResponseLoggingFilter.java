@@ -18,7 +18,6 @@ import javax.ws.rs.ext.Provider;
  *
  * @see ResponseInterceptor
  */
-@Logged
 @Provider
 public class ResponseLoggingFilter implements ContainerResponseFilter {
 

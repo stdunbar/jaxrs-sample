@@ -13,17 +13,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Because this has the Logged annotation, it is used for logging, in this case, requests.
+ * Logs requests to the services if they are marked with the Logged annotation.
+ * This class is marked with @Logged so that it pays attention to the annotation.
  *
  */
-@Logged
 @Provider
+@Logged
 public class RequestLoggingFilter implements ContainerRequestFilter {
-    private static Logger LOG = LoggerFactory.getLogger(RequestLoggingFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(RequestLoggingFilter.class);
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        LOG.info("got a " + requestContext.getMethod() + " request to " + requestContext.getUriInfo().getPath());
+        logger.info("got a " + requestContext.getMethod() + " request to " + requestContext.getUriInfo().getPath());
 
         StringWriter writer = new StringWriter();
         IOUtils.copy(requestContext.getEntityStream(), writer, "UTF-8");
@@ -31,6 +32,6 @@ public class RequestLoggingFilter implements ContainerRequestFilter {
         requestContext.setEntityStream(new ByteArrayInputStream(writer.toString().getBytes()));
 
         if(!requestContext.getMethod().toLowerCase().equals("get"))
-            LOG.info("input string is \"" + writer.toString() + "\"" );
+            logger.info("input string is \"" + writer.toString() + "\"" );
     }
 }

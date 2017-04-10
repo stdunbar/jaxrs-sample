@@ -21,7 +21,6 @@ public class ServiceHeartBeat {
 	 * @return a HTTP 200 with a simple "OK" text response packet.
 	 * 
 	 */
-	@Path("")
     @Produces({ MediaType.TEXT_PLAIN })
     @GET
 	public Response getHeartBeat() {

@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 public class Product implements Serializable {
     private static final long serialVersionUID = -4728364803694212664L;
 
-    private int productId;
-    private String identifier;
+    private Integer productId;
+    private String description;
     private OffsetDateTime createDate;
 
 
@@ -23,20 +23,20 @@ public class Product implements Serializable {
         this.createDate = OffsetDateTime.now(ZoneId.of("UTC"));
     }
 
-    public int getProductId() {
+    public Integer getProductId() {
         return this.productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
-    public String getIdentifier() {
-        return this.identifier;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreateDate() {

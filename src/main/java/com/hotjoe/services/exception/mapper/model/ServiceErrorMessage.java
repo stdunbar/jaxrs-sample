@@ -2,16 +2,11 @@
 
 package com.hotjoe.services.exception.mapper.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-
 /**
  * This class exists as the return to the front end.  Messages are serialized
  * from this to an error response.
  *
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceErrorMessage {
 
     private String message = null;
@@ -31,7 +26,6 @@ public class ServiceErrorMessage {
      * @return true if any of the fields are set, false otherwise
      *
      */
-    @JsonIgnore
     public boolean isEmpty() {
         return (message == null) && (stackTrace == null);
     }
