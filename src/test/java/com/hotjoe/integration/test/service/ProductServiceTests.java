@@ -57,7 +57,7 @@ public class ProductServiceTests {
     /**
     * The @Deployment annotation is required with Arquillian tests.  This method creates a temporary
     * war file that will be tested.  For this example this war contains the dependencies specified
-    * in the <pre>pom.xml</pre> file and anything in the <pre>com.avoka</pre> package.
+    * in the <pre>pom.xml</pre> file and anything in the <pre>com.hotjoe</pre> package.
     */
     @Deployment(testable = false)
     @SuppressWarnings("unused")
