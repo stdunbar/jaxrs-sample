@@ -1,9 +1,8 @@
-package com.hotjoe.model;
+package com.hotjoe.services.model;
 
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 

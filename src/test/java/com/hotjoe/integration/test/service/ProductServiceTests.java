@@ -38,7 +38,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.google.gson.Gson;
-import com.hotjoe.model.Product;
+import com.hotjoe.services.model.Product;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.hotjoe.services.services;
+package com.hotjoe.services;
 
 
 import javax.ws.rs.GET;

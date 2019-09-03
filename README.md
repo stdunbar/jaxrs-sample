@@ -75,6 +75,16 @@ product id that doesn't exist will return an HTTP 404 error with the body:
 }
 ```
 
+```GET /v1/version``` gets a long description of the current version.  Note that in a production environment
+this could give out a bit more (or perhaps alot more) information than you might like to.  This call takes
+advantage of the `Accepts` header - if you don't specify anything then you'll get an XML response.  Pass
+`application/json` to get back JSON.
+
+```GET /v1/version/summary``` gets a short description of the current version.  This is a `text/plain` response
+that gets just a quick summary of the version information.  Again, it may give out more information than
+you'd like.
+
+
 Logging
 ----
 The two product services are annotated with @Logged which means that the input

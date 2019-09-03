@@ -1,4 +1,4 @@
-package com.hotjoe.services.services;
+package com.hotjoe.services;
 
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import com.hotjoe.model.Product;
+import com.hotjoe.services.model.Product;
 import com.hotjoe.services.exception.BadRequestServiceException;
 import com.hotjoe.services.exception.ConflictServiceException;
 import com.hotjoe.services.exception.NotFoundServiceException;
