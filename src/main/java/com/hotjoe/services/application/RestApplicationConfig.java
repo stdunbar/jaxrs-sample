@@ -8,7 +8,7 @@ import javax.ws.rs.core.Application;
  * not directly used.
  *
  */
-@ApplicationPath("/")
+@ApplicationPath("/rest")
 public class RestApplicationConfig extends Application {
 	// intentionally empty
 }

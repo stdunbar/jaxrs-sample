@@ -32,8 +32,8 @@ import com.hotjoe.services.logging.Logged;
  */
 
 @Path("/v1/product")
-public class SampleService {
-    private static final Logger logger = Logger.getLogger(SampleService.class.getName());
+public class ProductService {
+    private static final Logger logger = Logger.getLogger(ProductService.class.getName());
 
     //
     // a demo backing store - it could be a db or whatever

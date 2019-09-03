@@ -10,7 +10,7 @@ To build, simply run
 
 ```mvn clean package```
 
-This will create a war file that can be deployed into an JEE app server.  I've only
+This will compile, run the unit tests, and create a war file that can be deployed into an JEE app server.  I've only
 tested with Wildfly at this point.
 
 The war file can be deployed to Wildfly and possibly other JEE application servers.
@@ -82,6 +82,6 @@ and output of them will be logged to the loggers.  This is a nice way to get
 the input and output of the web service calls without using any proprietary libraries.
 
 
-Copyright (c) 2017
+Copyright (c) 2019
 by Xigole Systems
 Licensed under the MIT License - see the file LICENSE for details. 

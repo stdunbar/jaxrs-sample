@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 
 /**
@@ -16,11 +17,13 @@ public class Product implements Serializable {
 
     private Integer productId;
     private String description;
-    private OffsetDateTime createDate;
+    private String createDate;
 
 
     public Product() {
-        this.createDate = OffsetDateTime.now(ZoneId.of("UTC"));
+        OffsetDateTime now = OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        this.createDate = formatter.format(now);
     }
 
     public Integer getProductId() {
@@ -40,10 +43,10 @@ public class Product implements Serializable {
     }
 
     public String getCreateDate() {
-        return DateTimeFormatter.ISO_INSTANT.format(this.createDate);
+        return this.createDate;
     }
 
-    public void setCreateDate(OffsetDateTime createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 }
