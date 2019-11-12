@@ -27,6 +27,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -64,12 +65,12 @@ public class ProductServiceTests {
     public static WebArchive createDeployment() {
 
         PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml");
-        ScopeType[] scopes = {ScopeType.COMPILE, ScopeType.IMPORT, ScopeType.TEST}; // no SYSTEM and no PROVIDED
+        ScopeType[] scopes = {ScopeType.COMPILE}; // no SYSTEM and no PROVIDED
         File[] libs = pom.importDependencies(scopes).resolve().using(TransitiveStrategy.INSTANCE).asFile();
 
         return ShrinkWrap.create(WebArchive.class, "service-test.war")
                 .addAsLibraries(libs)
-                .addPackages(true, "com.hotjoe")
+                .addPackages(true, Filters.exclude(".*Test.*"), "com.hotjoe")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
