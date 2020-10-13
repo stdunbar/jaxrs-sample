@@ -92,6 +92,6 @@ and output of them will be logged to the loggers.  This is a nice way to get
 the input and output of the web service calls without using any proprietary libraries.
 
 
-Copyright (c) 2019
+Copyright (c) 2020
 by Xigole Systems
 Licensed under the MIT License - see the file LICENSE for details. 
