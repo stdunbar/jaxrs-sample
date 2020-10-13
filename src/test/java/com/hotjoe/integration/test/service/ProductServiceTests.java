@@ -1,21 +1,8 @@
 package com.hotjoe.integration.test.service;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Random;
-
+import com.google.gson.Gson;
+import com.hotjoe.services.model.Product;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -38,8 +25,20 @@ import org.jboss.shrinkwrap.resolver.api.maven.strategy.TransitiveStrategy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.google.gson.Gson;
-import com.hotjoe.services.model.Product;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -53,7 +52,7 @@ import com.hotjoe.services.model.Product;
 */
 @RunWith(Arquillian.class)
 public class ProductServiceTests {
-    // private static final Logger logger = LoggerFactory.getLogger(SampleUnitTests.class);
+    // private static final Logger logger = LoggerFactory.getLogger(ProductServiceTests.class);
 
     /**
     * The @Deployment annotation is required with Arquillian tests.  This method creates a temporary
